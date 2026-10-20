@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Funções Lineares</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="corpo">
+    <canvas id="emberCanvas"></canvas>
+    <canvas id="leafCanvas"></canvas>
+
+    <audio id="aria_math" loop>
+         <source src="Aria_math.mpeg" type="audio/mpeg">
+    </audio>
+    <audio id="batalha_normal" loop>
+         <source src="batalha_normal.mpeg" type="audio/mpeg">
+    </audio>
+    <audio id="audio_passar_fase" loop>
+         <source src="passar_fase.mpeg" type="audio/mpeg">
+    </audio>
+    <audio id="boss_final" loop>
+         <source src="boss_final.mpeg" type="audio/mpeg">
+    </audio>
+
+
+     <div id="menu">
+        <button class="botao_nada" onclick="lancar_musica('aria_math')"></button>
+        
+        <h1 class="titulo">Arko 'In Tower</h1>
+
+        <p id="maxScore"></p>
+
+        <button onclick="mudar_tela('comecar')">
+            Iniciar Jogo
+        </button>
+    </div>
+
+    <div id="jogo">
+        <h2 class="mensagem"  id="mensagem"></h2>
+        <div id="cronometro"></div>
+        <canvas id="plano" width="1900" height="850"></canvas>
+
+        <div>
+            <p>Função Linear: </p>
+            <p id="funcao"></p>
+        </div>
+
+        <label>
+            a:
+            <input type="number" id="a">
+        </label>
+
+        <label>
+            b:
+            <input type="number" id="b">
+        </label>
+        <button onclick="Atirar()">Atirar</button>
+    </div>
+
+    <div id="tela_derrota">
+        <p>Tempo esgotado</p>
+        <p id="scoreDerrota"></p>
+        <button onclick="mudar_tela('recomecar')">Tentar novamente</button>
+        <button onclick="mudar_tela('tela_inicio')">Voltar para o inicio</button>
+    </div>
+    <div id="passar_fase">
+        <p>Fase finalizada</p>
+        <p id="scoreFase"></p>
+        <p id="scoreSomando"></p>
+        <button onclick="mudar_tela('avancar')">Proxima fase</button>
+        <button onclick="mudar_tela('tela_inicio')">Voltar para o inicio</button>
+    </div>
+    <div id="tela_vitoria">
+        <p>Você venceu o jogo</p>
+        <p id="scoreFinal">Total Score: </p>
+        <button onclick="mudar_tela('tela_inicio')">Voltar para o inicio</button>
+    </div>
+
+    <script src="app.js"></script>
+    <script src="particles.js"></script>
+
+</body>
+</html>

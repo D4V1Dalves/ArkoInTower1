@@ -1,0 +1,294 @@
+@font-face {
+  font-family: 'Angel';
+  src: url('Angel wish.ttf') format('truetype');
+}
+
+:root {
+  --stone-1: #4a4640;
+  --stone-2: #3a3631;
+  --stone-3: #2b2723;
+  --mortar: #1a1714;
+  --gold: #e6c66b;
+  --gold-dark: #8a6a1f;
+  --parchment: #f1e3c4;
+  --brown: #5a2e0c;
+}
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: var(--parchment);
+  min-height: 100vh;
+  image-rendering: pixelated;
+  background: #1a0a05 url("muro_castelo.png") center/512px 512px repeat fixed;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 110%, rgba(255,90,20,0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% -10%, rgba(255,160,40,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at center, transparent 35%, rgba(0,0,0,0.7) 100%);
+  pointer-events: none;
+  z-index: 1;
+  animation: heatPulse 5s ease-in-out infinite;
+}
+@keyframes heatPulse {
+  0%,100% { opacity: 0.9; }
+  50%     { opacity: 1; }
+}
+
+#emberCanvas, #leafCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+#emberCanvas { z-index: 0; }
+#leafCanvas  { z-index: 9999; }
+
+#menu, #jogo, #tela_derrota, #passar_fase, #tela_vitoria {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 24px;
+  text-align: center;
+}
+
+#menu { display: flex; }
+
+.titulo {
+  font-family: 'Angel', serif;
+  color: var(--gold);
+  font-size: clamp(48px, 8vw, 96px);
+  margin: 0;
+  text-shadow:
+    2px 2px 0 #000,
+    4px 4px 0 var(--brown),
+    0 0 24px rgba(230,198,107,0.4);
+  letter-spacing: 2px;
+}
+
+#maxScore, #scoreDerrota, #scoreFase, #scoreSomando, #scoreFinal {
+  font-family: 'Angel', serif;
+  font-size: 22px;
+  color: var(--parchment);
+  margin: 4px 0;
+}
+
+button {
+  font-family: 'Angel', serif;
+  font-size: 20px;
+  letter-spacing: 1px;
+  color: var(--parchment);
+  background: linear-gradient(180deg, #6b3a14 0%, #3a1d07 100%);
+  border: 3px solid var(--gold-dark);
+  border-radius: 4px;
+  padding: 10px 22px;
+  cursor: pointer;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,0.15),
+    inset 0 -3px 0 rgba(0,0,0,0.4),
+    0 4px 0 #000,
+    0 6px 16px rgba(0,0,0,0.5);
+  transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+}
+button:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+button:active {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,0.1),
+    inset 0 -2px 0 rgba(0,0,0,0.4),
+    0 2px 0 #000;
+}
+
+#jogo {
+  gap: 10px;
+  padding: 12px;
+}
+
+#cronometro {
+  font-family: 'Angel', serif;
+  font-size: 26px;
+  color: var(--gold);
+  background: rgba(0,0,0,0.55);
+  border: 2px solid var(--gold-dark);
+  border-radius: 6px;
+  padding: 4px 14px;
+  min-width: 80px;
+}
+
+.mensagem {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Angel', serif;
+  font-size: 32px;
+  color: var(--gold);
+  text-shadow: 2px 2px 0 #000;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.botao_nada{background: none; border: none; box-shadow: none;}
+.botao_nada:hover{filter: none; transform: none;}
+
+#plano {
+  display: block;
+  width: min(88vw, calc((100vh - 220px) * 1800 / 850), 1100px);
+  height: auto;
+  aspect-ratio: 1800 / 850;
+  background: url("fundo.jpeg") center/cover no-repeat, #000;
+  border: 6px solid var(--gold-dark);
+  border-radius: 8px;
+  box-shadow:
+    0 0 0 3px #000,
+    0 0 0 9px #2a1a08,
+    0 0 0 12px #000,
+    0 18px 40px rgba(0,0,0,0.7),
+    inset 0 0 60px rgba(0,0,0,0.5);
+  image-rendering: pixelated;
+}
+#som{ width: 30px;}
+
+#jogo > div:not(#cronometro) {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0,0,0,0.55);
+  border: 2px solid var(--gold-dark);
+  border-radius: 6px;
+  padding: 4px 12px;
+}
+#jogo > div p { margin: 0; font-family: 'Bold', serif; font-size: 20px; }
+#funcao { color: #5eead4; font-weight: bold;}
+
+#jogo label {
+  font-family: 'Angel', serif;
+  font-size: 20px;
+  color: var(--parchment);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+#jogo input[type="number"] {
+  width: 70px;
+  font-family: 'Angel', serif;
+  font-size: 18px;
+  padding: 4px 8px;
+  background: #1a1714;
+  color: var(--gold);
+  border: 2px solid var(--gold-dark);
+  border-radius: 4px;
+  text-align: center;
+}
+#jogo input[type="number"]:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 2px rgba(230,198,107,0.4);
+}
+
+#tela_derrota p, #passar_fase p, #tela_vitoria p {
+  font-family: 'Angel', serif;
+  font-size: 28px;
+  margin: 6px 0;
+  color: var(--parchment);
+  text-shadow: 2px 2px 0 #000;
+}
+#tela_derrota p:first-child, #passar_fase p:first-child, #tela_vitoria p:first-child {
+  font-size: 48px;
+  color: var(--gold);
+}
+
+#menu, #jogo, #tela_derrota, #passar_fase, #tela_vitoria {
+  animation: fadeIn 360ms ease both;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+:root {
+  --gold-glow: 0 0 8px rgba(230,198,107,0.55), 0 0 18px rgba(230,198,107,0.35);
+}
+
+.titulo {
+  background: linear-gradient(180deg, #fff3c0 0%, #e6c66b 45%, #8a6a1f 100%);
+  -webkit-background-clip: text;
+          background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(2px 2px 0 #000) drop-shadow(0 0 18px rgba(230,198,107,0.45));
+}
+
+button {
+  border-color: var(--gold);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 230, 150, 0.25),
+    inset 0 -3px 0 rgba(0,0,0,0.4),
+    0 4px 0 #000,
+    0 0 14px rgba(230,198,107,0.35),
+    0 6px 16px rgba(0,0,0,0.5);
+}
+button:hover {
+  border-color: #fff0b8;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 240, 180, 0.35),
+    inset 0 -3px 0 rgba(0,0,0,0.4),
+    0 4px 0 #000,
+    0 0 22px rgba(255, 200, 80, 0.65),
+    0 6px 18px rgba(0,0,0,0.6);
+}
+
+#cronometro {
+  border-color: var(--gold);
+  box-shadow: var(--gold-glow);
+  text-shadow: 0 0 6px rgba(230,198,107,0.7);
+}
+
+#jogo > div:not(#cronometro) {
+  border-color: var(--gold);
+  box-shadow: 0 0 6px rgba(230,198,107,0.35);
+}
+
+#plano {
+  border-color: var(--gold);
+  box-shadow:
+    0 0 0 3px #000,
+    0 0 0 9px var(--gold-dark),
+    0 0 0 12px #000,
+    0 0 28px rgba(230,198,107,0.45),
+    0 18px 40px rgba(0,0,0,0.7),
+    inset 0 0 60px rgba(0,0,0,0.5);
+}
+
+#jogo input[type="number"] {
+  border-color: var(--gold);
+  box-shadow: inset 0 0 6px rgba(230,198,107,0.25);
+}
+
+body { cursor: crosshair; }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #1a0a05; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--gold), var(--gold-dark));
+  border-radius: 6px;
+  border: 1px solid #000;
+}
